@@ -125,15 +125,6 @@ var InfiniteScroll = (function(_Component) {
       }
     },
     {
-      key: 'componentWillReceiveProps',
-      value: function componentWillReceiveProps(nextProps) {
-        if (nextProps.hasMore === false) {
-          this.detachScrollListener();
-          this.detachMousewheelListener();
-        }
-      },
-    },
-    {
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
         this.detachScrollListener();
@@ -209,6 +200,7 @@ var InfiniteScroll = (function(_Component) {
           scrollEl = this.getParentElement(this.scrollComponent);
         }
 
+        console.log("detachScrollListener", scrollEl);
         scrollEl.removeEventListener(
           'scroll',
           this.scrollListener,
@@ -219,6 +211,7 @@ var InfiniteScroll = (function(_Component) {
           this.scrollListener,
           this.options ? this.options : this.props.useCapture
         );
+        console.log("detachScrollListener DONE");
       }
     },
     {
@@ -287,6 +280,11 @@ var InfiniteScroll = (function(_Component) {
       key: 'scrollListener',
       value: function scrollListener() {
         var el = this.scrollComponent;
+        if (el === null) {
+          this.detachScrollListener();
+          return;
+        }
+
         var scrollEl = window;
         var parentNode = this.getParentElement(el);
 

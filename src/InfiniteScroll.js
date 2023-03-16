@@ -46,13 +46,6 @@ export default class InfiniteScroll extends Component {
     this.attachScrollListener();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.hasMore === false) {
-      this.detachScrollListener();
-      this.detachMousewheelListener();
-    }
-  }
-
   componentDidUpdate() {
     if (this.props.isReverse && this.loadMore) {
       const parentElement = this.getParentElement(this.scrollComponent);
@@ -128,6 +121,7 @@ export default class InfiniteScroll extends Component {
       scrollEl = this.getParentElement(this.scrollComponent);
     }
 
+    console.log("detachScrollListener", scrollEl);
     scrollEl.removeEventListener(
       'scroll',
       this.scrollListener,
@@ -138,6 +132,7 @@ export default class InfiniteScroll extends Component {
       this.scrollListener,
       this.options ? this.options : this.props.useCapture
     );
+    console.log("detachScrollListener DONE");
   }
 
   getParentElement(el) {
@@ -196,6 +191,11 @@ export default class InfiniteScroll extends Component {
 
   scrollListener() {
     const el = this.scrollComponent;
+    if (el === null) {
+      this.detachScrollListener();
+      return;
+    }
+
     const scrollEl = window;
     const parentNode = this.getParentElement(el);
 
