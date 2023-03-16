@@ -59,7 +59,6 @@ export default class InfiniteScroll extends Component {
   }
 
   componentWillUnmount() {
-    console.log("detached by component unmount");
     this.detachScrollListener();
     this.detachMousewheelListener();
   }
@@ -191,7 +190,6 @@ export default class InfiniteScroll extends Component {
   scrollListener() {
     const el = this.scrollComponent;
     if (el === null) {
-      console.log("detached by missing scrollComponent on scrollListener");
       this.detachScrollListener();
       return;
     }
@@ -223,7 +221,6 @@ export default class InfiniteScroll extends Component {
       offset < Number(this.props.threshold) &&
       (el && el.offsetParent !== null)
     ) {
-      console.log("detached by element visibility and offset");
       this.detachScrollListener();
       this.beforeScrollHeight = parentNode.scrollHeight;
       this.beforeScrollTop = parentNode.scrollTop;

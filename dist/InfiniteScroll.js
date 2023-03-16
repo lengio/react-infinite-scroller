@@ -127,7 +127,6 @@ var InfiniteScroll = (function(_Component) {
     {
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
-        console.log("detached by component unmount");
         this.detachScrollListener();
         this.detachMousewheelListener();
       }
@@ -280,7 +279,6 @@ var InfiniteScroll = (function(_Component) {
       value: function scrollListener() {
         var el = this.scrollComponent;
         if (el === null) {
-          console.log("detached by missing scrollComponent on scrollListener");
           this.detachScrollListener();
           return;
         }
@@ -316,7 +314,6 @@ var InfiniteScroll = (function(_Component) {
           el &&
           el.offsetParent !== null
         ) {
-          console.log("detached by element visibility and offset");
           this.detachScrollListener();
           this.beforeScrollHeight = parentNode.scrollHeight;
           this.beforeScrollTop = parentNode.scrollTop;
