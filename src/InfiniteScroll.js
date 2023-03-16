@@ -59,6 +59,7 @@ export default class InfiniteScroll extends Component {
   }
 
   componentWillUnmount() {
+    console.log("detached by component unmount");
     this.detachScrollListener();
     this.detachMousewheelListener();
   }
@@ -121,7 +122,6 @@ export default class InfiniteScroll extends Component {
       scrollEl = this.getParentElement(this.scrollComponent);
     }
 
-    console.log("detachScrollListener", scrollEl);
     scrollEl.removeEventListener(
       'scroll',
       this.scrollListener,
@@ -132,7 +132,6 @@ export default class InfiniteScroll extends Component {
       this.scrollListener,
       this.options ? this.options : this.props.useCapture
     );
-    console.log("detachScrollListener DONE");
   }
 
   getParentElement(el) {
@@ -192,6 +191,7 @@ export default class InfiniteScroll extends Component {
   scrollListener() {
     const el = this.scrollComponent;
     if (el === null) {
+      console.log("detached by missing scrollComponent on scrollListener");
       this.detachScrollListener();
       return;
     }
@@ -223,6 +223,7 @@ export default class InfiniteScroll extends Component {
       offset < Number(this.props.threshold) &&
       (el && el.offsetParent !== null)
     ) {
+      console.log("detached by element visibility and offset");
       this.detachScrollListener();
       this.beforeScrollHeight = parentNode.scrollHeight;
       this.beforeScrollTop = parentNode.scrollTop;
